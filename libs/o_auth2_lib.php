@@ -288,7 +288,11 @@ class OAuth2Lib extends OAuth2 {
 		if ($token !== null && !empty($token['username'])) {
 			$this->loadModel('User');
 			return $this->User->field($field, array(
-			  Configure::read('OAuth2Server.Auth.fields.username') => $token['username']
+				array('OR' => array(
+					'username' => $token['username'],
+					'email' => $token['username'],
+					'phone' => $token['username']
+				)),
 			));
 		}
 	}
